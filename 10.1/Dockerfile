@@ -43,13 +43,13 @@ COPY ./s2i/bin/ $STI_SCRIPTS_PATH
 
 RUN groupadd -g 1001 wildfly && \
     useradd -c "Wildfly User" -m -g wildfly -u 1001 wildfly && \
-    chown -R wildfly:wildfly /wildfly /opt/s2i/destination && \
+    chown -R wildfly:0 /wildfly /opt/s2i/destination && \
     chmod -R ug+rw /wildfly && \
     chmod -R g+rw /opt/s2i/destination
 
 ADD ./contrib/settings.xml /home/wildfly/.m2/
 
-RUN chown -R wildfly:wildfly /home/wildfly/.m2
+RUN chown -R wildfly:0 /home/wildfly/.m2
 
 USER 1001
 

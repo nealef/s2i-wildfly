@@ -201,7 +201,7 @@ function move_artifacts() {
     for t in $(echo $types | tr ";" "\n")
     do
       echo "Moving all $t artifacts from $LOCAL_SOURCE_DIR/$d directory into $DEPLOY_DIR for later deployment..."
-      chown -fR wildfly:wildfly $LOCAL_SOURCE_DIR/$d/*.$t
+      chown -fR wildfly:0 $LOCAL_SOURCE_DIR/$d/*.$t
       chmod -fR g+rw $LOCAL_SOURCE_DIR/$d/*.$t
       mv -v $LOCAL_SOURCE_DIR/$d/*.$t $DEPLOY_DIR 2> /dev/null
     done
@@ -226,7 +226,7 @@ mkdir -p $DEPLOY_DIR
 
 # Copy the source for compilation
 cp -Rf /opt/s2i/destination/src/. $LOCAL_SOURCE_DIR
-chown -R wildfly:wildfly $LOCAL_SOURCE_DIR
+chown -R wildfly:0 $LOCAL_SOURCE_DIR
 chmod -R g+rw $LOCAL_SOURCE_DIR
 
 if [ -d $LOCAL_SOURCE_DIR/configuration ]; then
@@ -306,7 +306,7 @@ fi
 if [ -d $LOCAL_SOURCE_DIR/cfg ]; then
   echo "Copying config files from project..."
   cp cfg/* /wildfly/standalone/configuration
-  chown -R wildfly:wildfly /wildfly/standalone/configuration
+  chown -R wildfly:0 /wildfly/standalone/configuration
   chmod -R g+rw /wildfly/standalone/configuration
 fi
 
@@ -314,7 +314,7 @@ if [ -d $LOCAL_SOURCE_DIR/modules ]; then
   echo "Copying modules from project..."
   mkdir /wildfly/provided_modules
   cp -r modules/* /wildfly/provided_modules
-  chown -R wildfly:wildfly /wildfly/provided_modules
+  chown -R wildfly:0 /wildfly/provided_modules
   chmod -R g+rw /wildfly/provided_modules
 fi
 echo "...done"
